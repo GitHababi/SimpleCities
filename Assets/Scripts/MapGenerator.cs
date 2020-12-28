@@ -12,7 +12,7 @@ public class MapGenerator : MonoBehaviour
          GenerateMap();
      }
      
-    public static float[,] GenerateNoiseMap(int mapWidth, int mapHeight, float heightScale) {
+    public static float[,] GenerateNoiseMap(int mapWidth, int mapHeight, float heightScale, int seed) {
       
        float[,] noiseMap = new float[mapWidth,mapHeight];
       if (heightScale <= 0) {
@@ -25,8 +25,8 @@ public class MapGenerator : MonoBehaviour
             float noiseHeight = 0;
             float amp = 1;
                for (int i = 0; i < 16; i++) {
-               float XFloat = x / heightScale;
-               float YFloat = y / heightScale;
+               float XFloat = x / heightScale + seed;
+               float YFloat = y / heightScale + seed;
                float perlinVal = Mathf.PerlinNoise(XFloat,YFloat);
                noiseHeight += perlinVal * amp;
                amp *= 0.5f;
@@ -39,7 +39,7 @@ public class MapGenerator : MonoBehaviour
    }
     public void GenerateMap() {
       
-        float[,] noiseMap = GenerateNoiseMap(Logic.MapDimensionX, Logic.MapDimensionY, 13);
+        float[,] noiseMap = GenerateNoiseMap(Logic.MapDimensionX, Logic.MapDimensionY, 13, 2012948);
         int OceanC = 0;
         int LandC = 0;
         int MountainC = 0;

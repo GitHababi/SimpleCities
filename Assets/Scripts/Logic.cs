@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Logic : MonoBehaviour
 {
-    public static int rangeX = 64;
-    public static int rangeY = 64;
+    public static int rangeX = 32;
+    public static int rangeY = 32;
     public static int MapDimensionX = 2 * rangeX;
     public static int MapDimensionY = 2 * rangeY;
     
@@ -20,7 +20,7 @@ public class Logic : MonoBehaviour
             if (hit.collider != null) {
                 if (hit.collider.gameObject.tag == "Mountain") {
                     Instantiate(ToFlatten, hit.collider.gameObject.transform.position, Quaternion.identity);
-                    Destroy(hit.collider.gameObject);
+                    Destroy(hit.collider.gameObject);   
                 }
             }
     } 
