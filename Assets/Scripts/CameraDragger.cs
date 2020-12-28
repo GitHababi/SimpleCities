@@ -17,14 +17,14 @@ public class CameraDragger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+		cameramovement = true;
 		dist = transform.position.z;
-		Debug.Log("Cumslut");
     }
 
     // Update is called once per frame
     void Update()
     {
-		
+		if (cameramovement == true) {
 			if (Input.GetMouseButtonDown(1)) {
 				MouseStart = new Vector3(Input.mousePosition.x, Input.mousePosition.y, dist);
 				MouseStart = Camera.main.ScreenToWorldPoint(MouseStart);
@@ -36,9 +36,22 @@ public class CameraDragger : MonoBehaviour
 				MouseMove = Camera.main.ScreenToWorldPoint(MouseMove);
 				MouseMove.z = transform.position.z;
 				transform.position = transform.position - (MouseMove - MouseStart);
-			}
-		if (Math.Abs(transform.position.x) >= Logic.rangeX || Math.Abs(transform.position.y) >= Logic.rangeY) {
-			RangeVector = new Vector3(Logic.rangeX, Logic.rangeY, 0);
+			} 
+		}
+		if (transform.position.x <= -Logic.rangeX) { //Fuck me this code looks ugly but hey, it works. 
+			RangeVector = new Vector3(-Logic.rangeX, transform.position.y, 0);
+			transform.position = RangeVector;
+		}
+		if (transform.position.y <= -Logic.rangeY) {
+			RangeVector = new Vector3(transform.position.x,-Logic.rangeY, 0);
+			transform.position = RangeVector;
+		}
+		if (transform.position.x >= Logic.rangeX) {
+			RangeVector = new Vector3(Logic.rangeX, transform.position.y, 0);
+			transform.position = RangeVector;
+		}
+		if (transform.position.y >= Logic.rangeY) {
+			RangeVector = new Vector3(transform.position.x,Logic.rangeY, 0);
 			transform.position = RangeVector;
 		}
     }
