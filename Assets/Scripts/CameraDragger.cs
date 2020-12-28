@@ -13,6 +13,8 @@ public class CameraDragger : MonoBehaviour
 	private Vector3 derp;
 	private Vector3 distance;
     bool cameramovement;
+	private float CameraX = Logic.rangeX - 4;
+	private float CameraY = Logic.rangeY - 4;
 
     // Start is called before the first frame update
     void Start()
@@ -38,20 +40,20 @@ public class CameraDragger : MonoBehaviour
 				transform.position = transform.position - (MouseMove - MouseStart);
 			} 
 		}
-		if (transform.position.x <= -Logic.rangeX) { //Fuck me this code looks ugly but hey, it works. 
-			RangeVector = new Vector3(-Logic.rangeX, transform.position.y, 0);
+		if (transform.position.x <= -CameraX) { //Fuck me this code looks ugly but hey, it works. 
+			RangeVector = new Vector3(-CameraX, transform.position.y, -10);
 			transform.position = RangeVector;
 		}
-		if (transform.position.y <= -Logic.rangeY) {
-			RangeVector = new Vector3(transform.position.x,-Logic.rangeY, 0);
+		if (transform.position.y <= -CameraY) {
+			RangeVector = new Vector3(transform.position.x,-CameraY, -10);
 			transform.position = RangeVector;
 		}
-		if (transform.position.x >= Logic.rangeX) {
-			RangeVector = new Vector3(Logic.rangeX, transform.position.y, 0);
+		if (transform.position.x >= CameraX) {
+			RangeVector = new Vector3(CameraX, transform.position.y, -10);
 			transform.position = RangeVector;
 		}
-		if (transform.position.y >= Logic.rangeY) {
-			RangeVector = new Vector3(transform.position.x,Logic.rangeY, 0);
+		if (transform.position.y >= CameraY) {
+			RangeVector = new Vector3(transform.position.x,CameraY, -10);
 			transform.position = RangeVector;
 		}
     }

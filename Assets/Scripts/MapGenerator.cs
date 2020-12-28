@@ -24,12 +24,12 @@ public class MapGenerator : MonoBehaviour
            for (int x = 0; x < mapWidth; x++) {
             float noiseHeight = 0;
             float amp = 1;
-               for (int i = 0; i < 8; i++) {
+               for (int i = 0; i < 16; i++) {
                float XFloat = x / heightScale;
                float YFloat = y / heightScale;
                float perlinVal = Mathf.PerlinNoise(XFloat,YFloat);
                noiseHeight += perlinVal * amp;
-               amp *= 0.3f;
+               amp *= 0.5f;
 
                }
            noiseMap [x , y] = noiseHeight;
@@ -39,18 +39,18 @@ public class MapGenerator : MonoBehaviour
    }
     public void GenerateMap() {
       
-        float[,] noiseMap = GenerateNoiseMap(Logic.MapDimensionX, Logic.MapDimensionY, 14);
+        float[,] noiseMap = GenerateNoiseMap(Logic.MapDimensionX, Logic.MapDimensionY, 13);
         int OceanC = 0;
         int LandC = 0;
         int MountainC = 0;
         for (int x = 0; x < Logic.MapDimensionX; x++) {
       
             for (int y = 0; y < Logic.MapDimensionY; y++) {
-                if (noiseMap[x,y] < 0.43333f) {
+                if (noiseMap[x,y] < 0.53333f) {
                     Object.Instantiate(Ocean, new Vector3(x - Logic.rangeX, y - Logic.rangeY, 0), Quaternion.identity);
                     OceanC++;
                 } else {
-                if (noiseMap[x,y] > 0.83333f) {
+                if (noiseMap[x,y] > 0.93333f) {
                     Object.Instantiate(Mountain, new Vector3(x - Logic.rangeX, y - Logic.rangeY, 0), Quaternion.identity);
                     MountainC++;
                 } else {
