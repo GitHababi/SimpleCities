@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {   
-      public GameObject Land;
-      public GameObject Ocean;
-      public GameObject Mountain;
      
-     public void Start() {
+     public void Awake() {
          GenerateMap();
      }
      
-    public static float[,] GenerateNoiseMap(int mapWidth, int mapHeight, float heightScale, int seed) {
+    public static float[,] GenerateNoiseMap(int mapWidth, int mapHeight, float heightScale, long seed) {
       
        float[,] noiseMap = new float[mapWidth,mapHeight];
       if (heightScale <= 0) {
@@ -37,24 +34,27 @@ public class MapGenerator : MonoBehaviour
        }
        return noiseMap;
    }
+
     public void GenerateMap() {
       
-        float[,] noiseMap = GenerateNoiseMap(Logic.MapDimensionX, Logic.MapDimensionY, 13, 2012948);
+        long Seed = (long)Mathf.Floor(Random.Range(0f, 10f) * 2000);
+        Debug.Log(Seed);
+        float[,] noiseMap = GenerateNoiseMap(Logic.MapDimensionX, Logic.MapDimensionY, 13, Seed);
         int OceanC = 0;
         int LandC = 0;
         int MountainC = 0;
         for (int x = 0; x < Logic.MapDimensionX; x++) {
       
             for (int y = 0; y < Logic.MapDimensionY; y++) {
-                if (noiseMap[x,y] < 0.53333f) {
-                    Object.Instantiate(Ocean, new Vector3(x - Logic.rangeX, y - Logic.rangeY, 0), Quaternion.identity);
+                if (noiseMap[x,y] < 0.73333f) {
+                    Logic.Grid[x,y] = 1;
                     OceanC++;
                 } else {
-                if (noiseMap[x,y] > 0.93333f) {
-                    Object.Instantiate(Mountain, new Vector3(x - Logic.rangeX, y - Logic.rangeY, 0), Quaternion.identity);
+                if (noiseMap[x,y] > 1.23333f) {
+                    Logic.Grid[x,y] = 2;
                     MountainC++;
                 } else {
-                    Object.Instantiate(Land, new Vector3(x - Logic.rangeX, y - Logic.rangeY, 0), Quaternion.identity);
+                    Logic.Grid[x,y] = 3;
                     LandC++;
                 }
                 }
