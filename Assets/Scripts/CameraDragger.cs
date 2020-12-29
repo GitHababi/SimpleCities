@@ -26,7 +26,13 @@ public class CameraDragger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		MouseDrag();
+    }
+
+	void MouseDrag() {
+
 		if (cameramovement == true) {
+
 			if (Input.GetMouseButtonDown(1)) {
 				MouseStart = new Vector3(Input.mousePosition.x, Input.mousePosition.y, dist);
 				MouseStart = Camera.main.ScreenToWorldPoint(MouseStart);
@@ -56,5 +62,5 @@ public class CameraDragger : MonoBehaviour
 			RangeVector = new Vector3(transform.position.x,CameraY, -10);
 			transform.position = RangeVector;
 		}
-    }
+	}
 }

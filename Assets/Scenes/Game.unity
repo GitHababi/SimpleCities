@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 71695991}
   - component: {fileID: 71695990}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Residential
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -174,7 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
+  m_IgnoreReversedGraphics: 0
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
@@ -236,7 +236,7 @@ GameObject:
   - component: {fileID: 349644154}
   - component: {fileID: 349644153}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Commercial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -523,7 +523,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.0536668, g: 0.053698212, b: 0.05660379, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -540,7 +540,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 7
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -583,7 +583,7 @@ GameObject:
   - component: {fileID: 1011927882}
   - component: {fileID: 1011927881}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Version Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -810,7 +810,7 @@ GameObject:
   - component: {fileID: 1471816841}
   - component: {fileID: 1471816840}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Terraform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -984,7 +984,7 @@ GameObject:
   - component: {fileID: 1563445018}
   - component: {fileID: 1563445017}
   m_Layer: 5
-  m_Name: Simple Cities Alpha
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1006,8 +1006,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 133.17712, y: -15}
-  m_SizeDelta: {x: 266.3542, y: 30}
+  m_AnchoredPosition: {x: 199.0395, y: -27.7311}
+  m_SizeDelta: {x: 398.0789, y: 55.4623}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1563445017
 MonoBehaviour:
@@ -1042,7 +1042,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: SIMPLE CITIES ALPHA
+  m_Text: simple cities alpha 0.01
 --- !u!222 &1563445018
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1174,7 +1174,7 @@ GameObject:
   - component: {fileID: 2031867772}
   - component: {fileID: 2031867771}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Industrial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1308,7 +1308,12 @@ MonoBehaviour:
     type: 3}
   MapGenerator: {fileID: 1946861523678265216, guid: f630addf0fd0bf8419e892c0ddc246b3,
     type: 3}
+  SelectSound: {fileID: 3519987373592054516, guid: c3049bf04eaa1a14d86cb1b52141beb4,
+    type: 3}
+  DigSound: {fileID: 7548955824414303434, guid: 14c1ed90a5140e64ba01a963a918c2a6,
+    type: 3}
   Ocean: {fileID: 6406582270853856421, guid: 329bbd9d3c8b88740abf4fa7c0416f50, type: 3}
   Mountain: {fileID: 7182330456816225058, guid: e285ec7ffd81b1f45902f5966b47d243,
     type: 3}
   Land: {fileID: 6652198087254198279, guid: 1836cdb0c0738f94787d80f933687ee4, type: 3}
+  Road: {fileID: 2211972647405666444, guid: 535d2d4a3cca6d748a567db871d43a0e, type: 3}

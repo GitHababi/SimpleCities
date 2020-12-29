@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Logic : MonoBehaviour
 {
+    public static bool UpdateTextures;
     public static int rangeX = 32;
     public static int rangeY = 32;
     public static int MapDimensionX = 2 * rangeX;
@@ -11,13 +12,18 @@ public class Logic : MonoBehaviour
     public static int[,] Grid = new int[Logic.MapDimensionX,Logic.MapDimensionY];
     public GameObject FlattenTo;
     public GameObject MapGenerator;
+    public GameObject SelectSound;
+    public GameObject DigSound;
     public GameObject Ocean;
     public GameObject Mountain;
     public GameObject Land;
+    public GameObject Road;
 
     void Start() {
+        Object.Instantiate(SelectSound, new Vector3(0,0,0), Quaternion.identity);
         Object.Instantiate(MapGenerator, new Vector3(0,0,0), Quaternion.identity);
         RefreshGrid();
+        UpdateTextures = true;
     }
     void Update() {
 
@@ -29,10 +35,35 @@ public class Logic : MonoBehaviour
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
             RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
-            if (hit.collider != null) {
-                if (hit.collider.gameObject.name == "Mountain(Clone)") {
-                    Grid[(int)hit.collider.gameObject.transform.position.x + rangeX, (int)hit.collider.gameObject.transform.position.y + rangeX] = 3;
+            if (hit.collider != null) {  
+                switch (hit.collider.gameObject.name)
+                {
+                    case "Mountain(Clone)":
+                    Grid[(int)hit.collider.gameObject.transform.position.x + rangeX, (int)hit.collider.gameObject.transform.position.y + rangeY] = 3;
+                    Object.Instantiate(DigSound, new Vector3(0,0,0), Quaternion.identity);
                     RefreshGrid();
+                    break;
+
+                    case "Ocean(Clone)":
+                    Grid[(int)hit.collider.gameObject.transform.position.x + rangeX, (int)hit.collider.gameObject.transform.position.y + rangeY] = 3;
+                    Object.Instantiate(DigSound, new Vector3(0,0,0), Quaternion.identity);
+                    RefreshGrid();
+                    break;
+
+                    case "Land(Clone)":
+                    Grid[(int)hit.collider.gameObject.transform.position.x + rangeX, (int)hit.collider.gameObject.transform.position.y + rangeY] = 4;
+                    Object.Instantiate(DigSound, new Vector3(0,0,0), Quaternion.identity);
+                    RefreshGrid();
+                    break;
+
+                    case "Road(Clone)":
+                    Grid[(int)hit.collider.gameObject.transform.position.x + rangeX, (int)hit.collider.gameObject.transform.position.y + rangeY] = 3;
+                    Object.Instantiate(DigSound, new Vector3(0,0,0), Quaternion.identity);
+                    RefreshGrid();
+                    break;
+
+                    default:
+                    break;
                 }
             }
         }
@@ -60,6 +91,9 @@ public class Logic : MonoBehaviour
                 Object.Instantiate(Land, new Vector3(x -rangeX, y -rangeY, 0), Quaternion.identity);
                 break;
 
+                case 4:
+                Object.Instantiate(Road, new Vector3(x -rangeX, y -rangeY, 0), Quaternion.identity);
+                break;
                 default:
                 Debug.Log("default");
                 break;
