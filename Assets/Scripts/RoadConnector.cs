@@ -28,13 +28,13 @@ public class RoadConnector : MonoBehaviour
         public Sprite TIntersectionDR;
         public Sprite TIntersectionUR;
     void Start() {
-     if (Logic.UpdateTextures == true) {
-         InvokeRepeating("CheckNeighbors", 0f, 0.5f);
-      } 
+        CheckNeighbors();
     }
     void Update()
     {
-        
+        if (Logic.UpdateTextures) {
+            CheckNeighbors();
+        }
     }
 
     void CheckNeighbors() {
