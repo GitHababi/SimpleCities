@@ -8,6 +8,9 @@ public class Commercial : MonoBehaviour
         bool R = false;
         bool U = false;
         bool D = false;
+        bool nextToRoad = false;
+        bool roadBefore = false;
+        int personalCount = 0;
         public SpriteRenderer spriteRenderer;
         public Sprite Center;
         public Sprite CornerLL;
@@ -29,6 +32,11 @@ public class Commercial : MonoBehaviour
             CheckNeighbors();
         }
     }
+        void OnDestroy() {
+        if (roadBefore) { //This line checks if there was a road before this gets destroyed, so that the number of active buildings is correct.
+            Logic.commercialCount--;
+        }
+    }
 
     void CheckNeighbors() {
         if ((int)transform.position.x + Logic.rangeX + 1 < Logic.MapDimensionX && (int)transform.position.y + Logic.rangeY + 1 < Logic.MapDimensionY && -1 < (int)transform.position.x + Logic.rangeX - 1 && -1 < (int)transform.position.y + Logic.rangeY - 1) {
@@ -36,6 +44,10 @@ public class Commercial : MonoBehaviour
             int Left = Logic.Grid[(int)transform.position.x + Logic.rangeX - 1, (int)transform.position.y + Logic.rangeY];
             int Up = Logic.Grid[(int)transform.position.x + Logic.rangeX, (int)transform.position.y + Logic.rangeY + 1];
             int Down = Logic.Grid[(int)transform.position.x + Logic.rangeX, (int)transform.position.y + Logic.rangeY - 1];
+            int RightUp = Logic.Grid[(int)transform.position.x + Logic.rangeX + 1, (int)transform.position.y + Logic.rangeY + 1];
+            int RightDown = Logic.Grid[(int)transform.position.x + Logic.rangeX + 1, (int)transform.position.y + Logic.rangeY - 1];
+            int LeftUp = Logic.Grid[(int)transform.position.x + Logic.rangeX - 1, (int)transform.position.y + Logic.rangeY + 1];
+            int LeftDown = Logic.Grid[(int)transform.position.x + Logic.rangeX - 1, (int)transform.position.y + Logic.rangeY - 1];
             if (Right == 6) 
             {
             R = true;
@@ -52,6 +64,30 @@ public class Commercial : MonoBehaviour
             {
             D = true;
             }
+            if (Right == 4) {nextToRoad = true;}
+            else {if (Left == 4) {nextToRoad = true;} 
+            else {if (Up == 4) {nextToRoad = true;} 
+            else {if (Down == 4) {nextToRoad = true;}
+            else {if (RightUp == 4) {nextToRoad = true;} 
+            else {if (RightDown == 4) {nextToRoad = true; } 
+            else {if (LeftUp == 4) {nextToRoad = true;} 
+            else {if (LeftDown == 4) {nextToRoad = true;}
+            else {nextToRoad = false;}}}}}}}}
+            if (nextToRoad && !roadBefore) {
+                personalCount = 1;
+            }
+            if (!nextToRoad && roadBefore) {
+                personalCount = -1;
+            }
+            if (personalCount == 1) {
+                Logic.commercialCount++;
+                roadBefore = true;
+            }
+            if (personalCount == -1) {
+                Logic.commercialCount--;
+                roadBefore = false;
+            }
+            personalCount = 0;
         }
         if (R && U) {spriteRenderer.sprite = CornerLL;}
         if (R && D) {spriteRenderer.sprite = CornerUL;}

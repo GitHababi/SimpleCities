@@ -8,6 +8,9 @@ public class Playerdata : MonoBehaviour
     //Save data goes here!
     public int[,] SavedGrid;
     public bool doGenerate;
+    public string cityName;
+    public int population;
+    public int time;
     public static Playerdata instance {get; private set;}
     private void Awake() {
      if (instance != null && instance != this) {
@@ -21,13 +24,16 @@ public class Playerdata : MonoBehaviour
     {
         if (File.Exists(Application.persistentDataPath + "/gamesave.dat")) 
         {
-        Debug.Log("Load Successful!");
         BinaryFormatter bf = new BinaryFormatter();
         using (FileStream file = File.Open(Application.persistentDataPath + "/gamesave.dat", FileMode.OpenOrCreate)) {
         Playerdata_Storage data = (Playerdata_Storage)bf.Deserialize(file);
 
+        time = data.time;
         SavedGrid = data.SavedGrid;
         doGenerate = data.doGenerate;
+        StatusScript.playerMessage = "Loaded!";
+        cityName = data.cityName;
+        population = data.population;
         }
        
         }
@@ -41,10 +47,13 @@ public class Playerdata : MonoBehaviour
         
         data.SavedGrid = SavedGrid;
         data.doGenerate = doGenerate;
-        
+        data.cityName = cityName;
+        data.population = population;
+        data.time = time;
+
         bf.Serialize(file, data);
         file.Close();
-        Debug.Log("Save Successful!");
+        StatusScript.playerMessage = "Saved!";
     }
 }
 [Serializable]
@@ -52,4 +61,7 @@ class Playerdata_Storage
 {
     public bool doGenerate;
     public int[,] SavedGrid;
+    public string cityName;
+    public int population;
+    public int time;
 }
