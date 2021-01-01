@@ -849,7 +849,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Simple cities v1.0 release
+  m_Text: Simple cities v1.05 release
 --- !u!222 &1219124305
 CanvasRenderer:
   m_ObjectHideFlags: 0
