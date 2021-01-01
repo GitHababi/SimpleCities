@@ -145,8 +145,6 @@ public class UIScript : MonoBehaviour
     }
     public void ToggleLoad() {
         Logic.doLoad = true;
-        
-            Debug.Log("Before the next one!");
     }
     public void ToggleSave() {
         Logic.doSave = true;

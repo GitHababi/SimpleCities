@@ -34,6 +34,14 @@ public class StatusScript : MonoBehaviour
     public GameObject moneyDisplay;
     private Text moneyText;
 
+    public static string powerMessage; //Power message box
+    public GameObject powerDisplay;
+    private Text powerText;
+
+    public static string waterMessage; //water message box
+    public GameObject waterDisplay;
+    private Text waterText;
+
     void Start() {
         StatusScript.playerMessage = "";
         StatusScript.statusMessage = "Tool: None";
@@ -58,6 +66,13 @@ public class StatusScript : MonoBehaviour
         timeText = timeDisplay.GetComponent<Text>();
         timeText.text = timeMessage;
 
+        waterText = waterDisplay.GetComponent<Text>();
+        waterMessage = "water: " + Logic.waterCount;
+        waterText.text = waterMessage;
+
+        powerText = powerDisplay.GetComponent<Text>();
+        powerMessage = "power: " + Logic.powerCount;
+        powerText.text = powerMessage;
 
 
         moneyText = moneyDisplay.GetComponent<Text>();

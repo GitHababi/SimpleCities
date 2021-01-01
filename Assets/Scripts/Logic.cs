@@ -15,7 +15,7 @@ public class Logic : MonoBehaviour
     public static int waterCount;
     public static int powerCount;
     public static int time;
-    public static int Cash;
+    public static int Cash = 10000;
     
     public static int rangeX = 64;
     public static int rangeY = 64;
@@ -73,15 +73,27 @@ public class Logic : MonoBehaviour
            LoadLogic();
         }
         RebuildGrid();
-        InvokeRepeating("GameTick", 0f, 10f);
+        InvokeRepeating("GameTick", 0f, 3f);
     }
     void GameTick() {
         time++;
-        if (residentialCount - waterCount > 0 && residentialCount - powerCount > 0) {
-        Cash += residentialCount * 100;
+        if (waterCount - residentialCount >= 0 && powerCount - residentialCount >= 0) {
+            if (residentialCount >= industrialCount + commercialCount) {
+            Cash += residentialCount * 100;
+            } else {
+                Cash += residentialCount * 50;  
+            }
+        }
+        if (waterCount - residentialCount - industrialCount >= 0 && powerCount - residentialCount - industrialCount >= 0 && residentialCount >= industrialCount + commercialCount) {
         Cash += industrialCount * 100;
+        }
+        if (waterCount - residentialCount - industrialCount - commercialCount >= 0 && powerCount - residentialCount - industrialCount - commercialCount >= 0 && residentialCount >= industrialCount + commercialCount) {
         Cash += commercialCount * 100;
         }
+        Cash -= 25 * waterCount;
+        Cash -= 25 * powerCount;
+        int expenses = 25 * powerCount + 25 * waterCount;
+        Debug.Log("Daily Expenses: " + expenses);
     }
     void Update() {
         if (Input.GetKey(KeyCode.L)) {
@@ -106,6 +118,7 @@ public class Logic : MonoBehaviour
         }
         if (gameExit == 1) {
             Invoke("ResetExit", 7f);
+            Invoke("ClearMessage", 7f);
         }
         StatusScript.residentialCount = "residential:" + residentialCount;
         StatusScript.commercialCount = "commercial:" + commercialCount;
@@ -133,6 +146,7 @@ public class Logic : MonoBehaviour
                     Object.Instantiate(Land, new Vector3(hit.collider.gameObject.transform.position.x,hit.collider.gameObject.transform.position.y, 0), Quaternion.identity);
                     UpdateTextures = true;
                     Destroy(hit.collider.gameObject);
+                    Cash -= 500;
                     break;
 
                     case "Ocean(Clone)":
@@ -141,6 +155,7 @@ public class Logic : MonoBehaviour
                     Object.Instantiate(Mountain, new Vector3(hit.collider.gameObject.transform.position.x,hit.collider.gameObject.transform.position.y, 0), Quaternion.identity);
                     UpdateTextures = true;
                     Destroy(hit.collider.gameObject);
+                    Cash -= 500;
                     break;
 
                     case "Land(Clone)":
@@ -149,6 +164,7 @@ public class Logic : MonoBehaviour
                     Object.Instantiate(Ocean, new Vector3(hit.collider.gameObject.transform.position.x,hit.collider.gameObject.transform.position.y, 0), Quaternion.identity);
                     UpdateTextures = true;
                     Destroy(hit.collider.gameObject);
+                    Cash -= 500;
                     break;
 
                     default:
@@ -164,6 +180,7 @@ public class Logic : MonoBehaviour
                     Object.Instantiate(Tower, new Vector3(hit.collider.gameObject.transform.position.x,hit.collider.gameObject.transform.position.y, 0), Quaternion.identity);
                     UpdateTextures = true;
                     Destroy(hit.collider.gameObject);
+                    Cash -= 1500;
                     break;
 
                     default:
@@ -179,6 +196,7 @@ public class Logic : MonoBehaviour
                     Object.Instantiate(Pump, new Vector3(hit.collider.gameObject.transform.position.x,hit.collider.gameObject.transform.position.y, 0), Quaternion.identity);
                     UpdateTextures = true;
                     Destroy(hit.collider.gameObject);
+                    Cash -= 4800;
                     break;
 
                     default:
@@ -194,6 +212,7 @@ public class Logic : MonoBehaviour
                     Object.Instantiate(Turbine, new Vector3(hit.collider.gameObject.transform.position.x,hit.collider.gameObject.transform.position.y, 0), Quaternion.identity);
                     UpdateTextures = true;
                     Destroy(hit.collider.gameObject);
+                    Cash -= 1500;
                     break;
 
                     default:
@@ -209,6 +228,7 @@ public class Logic : MonoBehaviour
                     Object.Instantiate(Plant, new Vector3(hit.collider.gameObject.transform.position.x,hit.collider.gameObject.transform.position.y, 0), Quaternion.identity);
                     UpdateTextures = true;
                     Destroy(hit.collider.gameObject);
+                    Cash -= 4800;
                     break;
 
                     default:
@@ -239,6 +259,7 @@ public class Logic : MonoBehaviour
                     Object.Instantiate(Road, new Vector3(hit.collider.gameObject.transform.position.x,hit.collider.gameObject.transform.position.y, 0), Quaternion.identity);
                     UpdateTextures = true;
                     Destroy(hit.collider.gameObject);
+                    Cash -= 500;
                     break;
 
                     default:
@@ -268,6 +289,7 @@ public class Logic : MonoBehaviour
                     Object.Instantiate(Land, new Vector3(hit.collider.gameObject.transform.position.x,hit.collider.gameObject.transform.position.y, 0), Quaternion.identity);
                     Destroy(hit.collider.gameObject);
                     UpdateTextures = true;
+                    Cash += 250;
                     Dig();
                     break;
 
@@ -300,6 +322,7 @@ public class Logic : MonoBehaviour
                     Object.Instantiate(Land, new Vector3(hit.collider.gameObject.transform.position.x,hit.collider.gameObject.transform.position.y, 0), Quaternion.identity);
                     Destroy(hit.collider.gameObject);
                     UpdateTextures = true;
+                    Cash += 2400;
                     Dig();
                     break;
 
@@ -308,6 +331,7 @@ public class Logic : MonoBehaviour
                     Object.Instantiate(Land, new Vector3(hit.collider.gameObject.transform.position.x,hit.collider.gameObject.transform.position.y, 0), Quaternion.identity);
                     Destroy(hit.collider.gameObject);
                     UpdateTextures = true;
+                    Cash += 750;
                     Dig();
                     break;
 
@@ -316,6 +340,7 @@ public class Logic : MonoBehaviour
                     Object.Instantiate(Land, new Vector3(hit.collider.gameObject.transform.position.x,hit.collider.gameObject.transform.position.y, 0), Quaternion.identity);
                     Destroy(hit.collider.gameObject);
                     UpdateTextures = true;
+                    Cash += 750;
                     Dig();
                     break;
 
@@ -324,6 +349,7 @@ public class Logic : MonoBehaviour
                     Object.Instantiate(Land, new Vector3(hit.collider.gameObject.transform.position.x,hit.collider.gameObject.transform.position.y, 0), Quaternion.identity);
                     Destroy(hit.collider.gameObject);
                     UpdateTextures = true;
+                    Cash += 2400;
                     Dig();
                     break;
 
@@ -424,7 +450,6 @@ public class Logic : MonoBehaviour
         Invoke("ClearMessage", 1f);
     }
     void LoadLogic() {
-        Debug.Log("do you even run?");
         LoadS();
         try {Playerdata.instance.Load();}
         catch {Object.Instantiate(MapGenerator, new Vector3(0,0,0), Quaternion.identity);}

@@ -130,6 +130,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1289317304947208414, guid: 08bf39ffb87dec94f8c9de464ca0a8a6,
+        type: 3}
+      propertyPath: m_Text
+      value: "Copyright hababisoft \xA92020"
+      objectReference: {fileID: 0}
     - target: {fileID: 1868054475560740714, guid: 08bf39ffb87dec94f8c9de464ca0a8a6,
         type: 3}
       propertyPath: m_RootOrder

@@ -7,6 +7,7 @@ public class TitleScript : MonoBehaviour
 {
     public GameObject Quit;
     public GameObject Play;
+    public GameObject Select;
     private Text playtext;
     private Text quittext;
     
@@ -27,12 +28,18 @@ public class TitleScript : MonoBehaviour
         playtext.color = new Color(1f, 1f, 1f, 1f);
     }
     public void PlayButton() {
+        SelectSound();
         SceneManager.LoadScene(1);
     }
     public void QuitButton() {
+        SelectSound();
         Application.Quit();
     }   
     public void HababisoftClick() {
+        SelectSound();
         Application.OpenURL("https://githababi.github.io/");
+    }
+    void SelectSound() {
+        Object.Instantiate(Select, new Vector3(0,0,0), Quaternion.identity);
     }
 }
