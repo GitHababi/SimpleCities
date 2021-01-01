@@ -38,7 +38,7 @@ public class MapGenerator : MonoBehaviour
     public void GenerateMap() {
       
         long Seed = (long)Mathf.Floor(Random.Range(0f, 10f) * 2000);
-        Debug.Log(Seed);
+        Debug.Log("World Seed: " + Seed);
         float[,] noiseMap = GenerateNoiseMap(Logic.MapDimensionX, Logic.MapDimensionY, 13, Seed);
         int OceanC = 0;
         int LandC = 0;

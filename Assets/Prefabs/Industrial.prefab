@@ -133,3 +133,4 @@ MonoBehaviour:
   EdgeR: {fileID: 21300000, guid: 66785fab2eddc1e4f90c446bee9619a9, type: 3}
   EdgeD: {fileID: 21300000, guid: d9d75cdc9cfe27445b77862867c3288a, type: 3}
   Solo: {fileID: 21300000, guid: c767909633616df48b14a22d8f18f484, type: 3}
+  NotConnected: {fileID: 21300000, guid: 8211e677858a0b745ab985aba44d4a7d, type: 3}

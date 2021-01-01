@@ -12,7 +12,10 @@ public class Logic : MonoBehaviour
     public static int residentialCount;
     public static int commercialCount;
     public static int industrialCount;
+    public static int waterCount;
+    public static int powerCount;
     public static int time;
+    public static int Cash;
     
     public static int rangeX = 64;
     public static int rangeY = 64;
@@ -27,6 +30,10 @@ public class Logic : MonoBehaviour
     public static bool isBuildResidential = false;
     public static bool isBuildCommercial = false;
     public static bool isBuildIndustrial = false;
+    public static bool isBuildPump = false;
+    public static bool isBuildTurbine = false;
+    public static bool isBuildTower = false;
+    public static bool isBuildPlant = false;
     public static int  gameExit = 0;
 
     public static bool doSave = false;
@@ -43,6 +50,10 @@ public class Logic : MonoBehaviour
     public GameObject Residential;
     public GameObject Commercial;
     public GameObject Industrial;
+    public GameObject Pump;
+    public GameObject Tower;
+    public GameObject Plant;
+    public GameObject Turbine;
 
     public GameObject SelectSound; //Sounds are put here
     public GameObject DigSound;
@@ -51,11 +62,13 @@ public class Logic : MonoBehaviour
     public GameObject LoadSound;
 
     void Start() {
+        Select();
         if (doGenerate) {
         Object.Instantiate(MapGenerator, new Vector3(0,0,0), Quaternion.identity);
         doGenerate = false;
         Playerdata.instance.doGenerate = doGenerate;
         Playerdata.instance.SavedGrid = Grid;
+        Playerdata.instance.Cash = Cash;
         } else {
            LoadLogic();
         }
@@ -64,9 +77,23 @@ public class Logic : MonoBehaviour
     }
     void GameTick() {
         time++;
-        StatusScript.timeMessage = "Day Number: " + time;
+        if (residentialCount - waterCount > 0 && residentialCount - powerCount > 0) {
+        Cash += residentialCount * 100;
+        Cash += industrialCount * 100;
+        Cash += commercialCount * 100;
+        }
     }
     void Update() {
+        if (Input.GetKey(KeyCode.L)) {
+            Cash += 2000;
+        }
+        if (Input.GetKey(KeyCode.K)) {
+            Cash += -2000;
+        }
+        if (Cash <= -50000) {
+            StatusScript.playerMessage = "Uh oh!\nIt appears you are in too much debt\nThe banks have come to collect their money\nand they will take your city with them!";
+            Invoke("ClearMessage", 5f);
+        }
         if (doSave) {
             doSave = false;
             Invoke("SaveLogic", 1.0f);
@@ -83,6 +110,8 @@ public class Logic : MonoBehaviour
         StatusScript.residentialCount = "residential:" + residentialCount;
         StatusScript.commercialCount = "commercial:" + commercialCount;
         StatusScript.industrialCount = "industrial:" + industrialCount;
+        StatusScript.timeMessage = "Day Number: " + time;
+        StatusScript.moneyMessage = "$ " + Cash;
         UpdateTextures = false;
         LeftClick();
     }
@@ -102,6 +131,7 @@ public class Logic : MonoBehaviour
                     Dig();
                     Grid[(int)hit.collider.gameObject.transform.position.x + rangeX, (int)hit.collider.gameObject.transform.position.y + rangeY] = 3;
                     Object.Instantiate(Land, new Vector3(hit.collider.gameObject.transform.position.x,hit.collider.gameObject.transform.position.y, 0), Quaternion.identity);
+                    UpdateTextures = true;
                     Destroy(hit.collider.gameObject);
                     break;
 
@@ -109,6 +139,7 @@ public class Logic : MonoBehaviour
                     Grid[(int)hit.collider.gameObject.transform.position.x + rangeX, (int)hit.collider.gameObject.transform.position.y + rangeY] = 2;
                     Dig();
                     Object.Instantiate(Mountain, new Vector3(hit.collider.gameObject.transform.position.x,hit.collider.gameObject.transform.position.y, 0), Quaternion.identity);
+                    UpdateTextures = true;
                     Destroy(hit.collider.gameObject);
                     break;
 
@@ -116,12 +147,73 @@ public class Logic : MonoBehaviour
                     Grid[(int)hit.collider.gameObject.transform.position.x + rangeX, (int)hit.collider.gameObject.transform.position.y + rangeY] = 1;
                     Dig();
                     Object.Instantiate(Ocean, new Vector3(hit.collider.gameObject.transform.position.x,hit.collider.gameObject.transform.position.y, 0), Quaternion.identity);
+                    UpdateTextures = true;
                     Destroy(hit.collider.gameObject);
                     break;
 
                     default:
                     break;
                 }
+            }
+            if (hit.collider != null && isBuildTower) {
+               switch (hit.collider.gameObject.name)
+                {
+                    case "Land(Clone)":
+                    Grid[(int)hit.collider.gameObject.transform.position.x + rangeX, (int)hit.collider.gameObject.transform.position.y + rangeY] = 8;
+                    Place();
+                    Object.Instantiate(Tower, new Vector3(hit.collider.gameObject.transform.position.x,hit.collider.gameObject.transform.position.y, 0), Quaternion.identity);
+                    UpdateTextures = true;
+                    Destroy(hit.collider.gameObject);
+                    break;
+
+                    default:
+                    break;
+                } 
+            }
+            if (hit.collider != null && isBuildPump) {
+               switch (hit.collider.gameObject.name)
+                {
+                    case "Land(Clone)":
+                    Grid[(int)hit.collider.gameObject.transform.position.x + rangeX, (int)hit.collider.gameObject.transform.position.y + rangeY] = 9;
+                    Place();
+                    Object.Instantiate(Pump, new Vector3(hit.collider.gameObject.transform.position.x,hit.collider.gameObject.transform.position.y, 0), Quaternion.identity);
+                    UpdateTextures = true;
+                    Destroy(hit.collider.gameObject);
+                    break;
+
+                    default:
+                    break;
+                } 
+            }
+            if (hit.collider != null && isBuildTurbine) {
+               switch (hit.collider.gameObject.name)
+                {
+                    case "Land(Clone)":
+                    Grid[(int)hit.collider.gameObject.transform.position.x + rangeX, (int)hit.collider.gameObject.transform.position.y + rangeY] = 10;
+                    Place();
+                    Object.Instantiate(Turbine, new Vector3(hit.collider.gameObject.transform.position.x,hit.collider.gameObject.transform.position.y, 0), Quaternion.identity);
+                    UpdateTextures = true;
+                    Destroy(hit.collider.gameObject);
+                    break;
+
+                    default:
+                    break;
+                } 
+            }
+            if (hit.collider != null && isBuildPlant) {
+               switch (hit.collider.gameObject.name)
+                {
+                    case "Land(Clone)":
+                    Grid[(int)hit.collider.gameObject.transform.position.x + rangeX, (int)hit.collider.gameObject.transform.position.y + rangeY] = 11;
+                    Place();
+                    Object.Instantiate(Plant, new Vector3(hit.collider.gameObject.transform.position.x,hit.collider.gameObject.transform.position.y, 0), Quaternion.identity);
+                    UpdateTextures = true;
+                    Destroy(hit.collider.gameObject);
+                    break;
+
+                    default:
+                    break;
+                } 
             }
             if (hit.collider != null && isBuildResidential) {
                switch (hit.collider.gameObject.name)
@@ -203,6 +295,38 @@ public class Logic : MonoBehaviour
                     Dig();
                     break;
 
+                    case "PowerPlant(Clone)":
+                    Grid[(int)hit.collider.gameObject.transform.position.x + rangeX, (int)hit.collider.gameObject.transform.position.y + rangeY] = 3;
+                    Object.Instantiate(Land, new Vector3(hit.collider.gameObject.transform.position.x,hit.collider.gameObject.transform.position.y, 0), Quaternion.identity);
+                    Destroy(hit.collider.gameObject);
+                    UpdateTextures = true;
+                    Dig();
+                    break;
+
+                    case "PowerTurbine(Clone)":
+                    Grid[(int)hit.collider.gameObject.transform.position.x + rangeX, (int)hit.collider.gameObject.transform.position.y + rangeY] = 3;
+                    Object.Instantiate(Land, new Vector3(hit.collider.gameObject.transform.position.x,hit.collider.gameObject.transform.position.y, 0), Quaternion.identity);
+                    Destroy(hit.collider.gameObject);
+                    UpdateTextures = true;
+                    Dig();
+                    break;
+
+                    case "WaterTower(Clone)":
+                    Grid[(int)hit.collider.gameObject.transform.position.x + rangeX, (int)hit.collider.gameObject.transform.position.y + rangeY] = 3;
+                    Object.Instantiate(Land, new Vector3(hit.collider.gameObject.transform.position.x,hit.collider.gameObject.transform.position.y, 0), Quaternion.identity);
+                    Destroy(hit.collider.gameObject);
+                    UpdateTextures = true;
+                    Dig();
+                    break;
+
+                    case "WaterPump(Clone)":
+                    Grid[(int)hit.collider.gameObject.transform.position.x + rangeX, (int)hit.collider.gameObject.transform.position.y + rangeY] = 3;
+                    Object.Instantiate(Land, new Vector3(hit.collider.gameObject.transform.position.x,hit.collider.gameObject.transform.position.y, 0), Quaternion.identity);
+                    Destroy(hit.collider.gameObject);
+                    UpdateTextures = true;
+                    Dig();
+                    break;
+
                     default:
                     break;
                 }
@@ -226,9 +350,9 @@ public class Logic : MonoBehaviour
 
     }
     public void RebuildGrid() {
-        residentialCount = 0;
+       /*  residentialCount = 0;
         industrialCount = 0;
-        commercialCount = 0;
+        commercialCount = 0; */
         GameObject[] GameTiles = GameObject.FindGameObjectsWithTag("GameTile"); 
         foreach(GameObject GameTile in GameTiles)  
         {
@@ -266,6 +390,22 @@ public class Logic : MonoBehaviour
                         Object.Instantiate(Industrial, new Vector3(x -rangeX, y -rangeY, 0), Quaternion.identity);
                         break;
 
+                        case 8:
+                        Object.Instantiate(Tower, new Vector3(x -rangeX, y -rangeY, 0), Quaternion.identity);
+                        break;
+
+                        case 9:
+                        Object.Instantiate(Pump, new Vector3(x -rangeX, y -rangeY, 0), Quaternion.identity);
+                        break;
+
+                        case 10:
+                        Object.Instantiate(Turbine, new Vector3(x -rangeX, y -rangeY, 0), Quaternion.identity);
+                        break;
+
+                        case 11:
+                        Object.Instantiate(Plant, new Vector3(x -rangeX, y -rangeY, 0), Quaternion.identity);
+                        break;
+
                         default:
                         Debug.Log("default");
                         break;
@@ -279,16 +419,19 @@ public class Logic : MonoBehaviour
         Playerdata.instance.SavedGrid = Grid;
         Playerdata.instance.doGenerate = doGenerate;
         Playerdata.instance.time = time;
+        Playerdata.instance.Cash = Cash;
         Playerdata.instance.Save();
         Invoke("ClearMessage", 1f);
     }
     void LoadLogic() {
+        Debug.Log("do you even run?");
         LoadS();
         try {Playerdata.instance.Load();}
         catch {Object.Instantiate(MapGenerator, new Vector3(0,0,0), Quaternion.identity);}
         Grid = Playerdata.instance.SavedGrid;
         doGenerate = Playerdata.instance.doGenerate;
         time = Playerdata.instance.time;
+        Cash = Playerdata.instance.Cash;
         RebuildGrid();
         Invoke("ClearMessage", 1f);
     }

@@ -56,6 +56,7 @@ MonoBehaviour:
   EdgeR: {fileID: 21300000, guid: b451bfc1f1a0afc46955504bc84c9417, type: 3}
   EdgeD: {fileID: 21300000, guid: 5ccb42b162053c6449a99628490bc3e1, type: 3}
   Solo: {fileID: 21300000, guid: b56148947334a3f47a21a64de22d13b4, type: 3}
+  NotConnected: {fileID: 21300000, guid: aa7823c5ec2c00a409f08037c2fe842f, type: 3}
 --- !u!212 &-47282379067176826
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -124,7 +125,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.32, y: 0.32}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 0.32, y: 0.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

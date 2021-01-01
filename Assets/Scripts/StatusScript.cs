@@ -30,6 +30,10 @@ public class StatusScript : MonoBehaviour
     public GameObject timeDisplay;
     private Text timeText;
 
+    public static string moneyMessage; //Cash Text message box
+    public GameObject moneyDisplay;
+    private Text moneyText;
+
     void Start() {
         StatusScript.playerMessage = "";
         StatusScript.statusMessage = "Tool: None";
@@ -53,5 +57,16 @@ public class StatusScript : MonoBehaviour
 
         timeText = timeDisplay.GetComponent<Text>();
         timeText.text = timeMessage;
+
+
+
+        moneyText = moneyDisplay.GetComponent<Text>();
+        if (Logic.Cash < 0) {
+            moneyText.color = new Color(1,0,0,1);
+        }
+        else {
+            moneyText.color = new Color(0,1,0,1);
+        }
+        moneyText.text = moneyMessage;
     }
 }

@@ -22,6 +22,7 @@ public class IndustrialScript : MonoBehaviour
         public Sprite EdgeR;
         public Sprite EdgeD;
         public Sprite Solo;
+        public Sprite NotConnected;
 
     void Start() {
         CheckNeighbors();
@@ -88,14 +89,25 @@ public class IndustrialScript : MonoBehaviour
             }
             personalCount = 0;
         }
+        if (!roadBefore || !nextToRoad) {spriteRenderer.sprite = NotConnected;}
+        else {
         if (R && U) {spriteRenderer.sprite = CornerLL;}
+        else {
         if (R && D) {spriteRenderer.sprite = CornerUL;}
+        else {
         if (L && U) {spriteRenderer.sprite = CornerLR;}
+        else {
         if (L && D) {spriteRenderer.sprite = CornerUR;}
+        else {
         if (U && D && R) {spriteRenderer.sprite = EdgeL;}
+        else {
         if (U && D && L) {spriteRenderer.sprite = EdgeR;}
+        else {
         if (L && R && D) {spriteRenderer.sprite = EdgeU;}
+        else {
         if (L && R && U) {spriteRenderer.sprite = EdgeD;}
+        else {
         if (L && R && U && D) {spriteRenderer.sprite = Center;}
+        else {if (nextToRoad|| roadBefore) {spriteRenderer.sprite = Solo;}}}}}}}}}}}
     }
 }

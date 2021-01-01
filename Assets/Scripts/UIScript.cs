@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIScript : MonoBehaviour
 {
     public GameObject SelectSound;
+    private int SwitchSpecial;
     public void ToggleTerraform() {
         if (Logic.isTerraform) {
             Select();
@@ -18,7 +20,7 @@ public class UIScript : MonoBehaviour
             StatusScript.statusMessage = "Tool: Terraform";
         }
     }
-    public void ToggleBuildRoad() {
+    public void ToggleRoad() {
         if (Logic.isBuildRoad) {
             Select();
             StatusScript.statusMessage = "Tool: None";
@@ -28,6 +30,37 @@ public class UIScript : MonoBehaviour
             DisableAll();
             Logic.isBuildRoad = true;
             StatusScript.statusMessage = "Tool: Road";
+        }
+    }
+    public void SwitchSpecialButton() {
+        SwitchSpecial++;
+        Select();
+        DisableAll();
+        switch (SwitchSpecial){
+            case 1:
+            Logic.isBuildPump = true;
+            StatusScript.statusMessage = "Tool: Water Pump";
+            break;
+
+            case 2:
+            Logic.isBuildTurbine = true;
+            StatusScript.statusMessage = "Tool: Power Turbine";
+            break;
+            
+            case 3:
+            Logic.isBuildTower = true;
+            StatusScript.statusMessage = "Tool: Water Tower";
+            break;
+            
+            case 4:
+            Logic.isBuildPlant = true;
+            StatusScript.statusMessage = "Tool: Power Plant";
+            break;
+            
+            default:
+            StatusScript.statusMessage = "Tool: None";
+            SwitchSpecial = 0;
+            break;
         }
     }
     public void ToggleDestroy() {
@@ -81,7 +114,7 @@ public class UIScript : MonoBehaviour
     public void ExitButton() {
         if (Logic.gameExit == 1) {
             Select();
-            Application.Quit(0);
+            SceneManager.LoadScene(0);
         }
         if (Logic.gameExit == 0){
             Select();
@@ -96,6 +129,10 @@ public class UIScript : MonoBehaviour
         Logic.isBuildResidential = false;
         Logic.isBuildCommercial = false;
         Logic.isBuildIndustrial = false;
+        Logic.isBuildPump = false;
+        Logic.isBuildTurbine = false;
+        Logic.isBuildTower = false;
+        Logic.isBuildPlant = false;
     }
     public void GUIEnter() {
         Logic.isOnGUI = true;
@@ -108,6 +145,8 @@ public class UIScript : MonoBehaviour
     }
     public void ToggleLoad() {
         Logic.doLoad = true;
+        
+            Debug.Log("Before the next one!");
     }
     public void ToggleSave() {
         Logic.doSave = true;
