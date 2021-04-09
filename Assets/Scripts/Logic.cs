@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class Logic : MonoBehaviour
+// Just going to be honest, this is probably the worst code I have ever seen or written myself, please dont kill me gods of C#
+public class Logic : MonoBehaviour 
 {
     public static bool UpdateTextures = false; 
     
